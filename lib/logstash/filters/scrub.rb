@@ -45,10 +45,10 @@ class LogStash::Filters::Scrub < LogStash::Filters::Base
       load_dictionary(raise_exception)
     end
 
-    @logger.debug? and @logger.debug("#{self.class.name}: Dictionary - ", :dictionary => @dictionary
+    @logger.debug? and @logger.debug("#{self.class.name}: Dictionary - ", :dictionary => @dictionary)
   end # def register
 
-  public
+  
   def filter
     if @dictionary_path
       if @next_refresh < Time.now

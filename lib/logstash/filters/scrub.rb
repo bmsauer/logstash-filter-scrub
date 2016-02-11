@@ -92,6 +92,14 @@ class LogStash::Filters::Scrub < LogStash::Filters::Base
     loading_exception(e, raise_exception)
   end
 
+  def load_yaml(raise_exception=false)
+    if !File.exists?(@dictionary_path)
+      @logger.warn("dictionary file read failure, continuing with old dictionary", :path => @dictionary_path)
+      return
+    end
+    merge_dictionary!(YAML.load_file(@dictionary_path), raise_exception)
+  end
+
   def merge_dictionary!(data, raise_exception=false)
       @dictionary.merge!(data)
   end

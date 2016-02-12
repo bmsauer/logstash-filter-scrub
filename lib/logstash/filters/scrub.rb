@@ -39,6 +39,7 @@ class LogStash::Filters::Scrub < LogStash::Filters::Base
 
   public
   def register
+    @dictionary = {}
     if @dictionary_path
       @next_refresh = Time.now + @refresh_interval
       raise_exception = true

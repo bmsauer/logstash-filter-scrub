@@ -67,6 +67,8 @@ class LogStash::Filters::Scrub < LogStash::Filters::Base
       matched = false
       
       translation = source.gsub(Regexp.union(@dictionary.keys), @dictionary)
+      @logger.error(@dictionary.to_s)
+      @logger.error(source)
       if source != translation
         event[@field] = translation.force_encoding(Encoding::UTF_8)
         matched = true

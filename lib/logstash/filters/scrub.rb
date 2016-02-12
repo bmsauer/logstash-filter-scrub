@@ -58,7 +58,7 @@ class LogStash::Filters::Scrub < LogStash::Filters::Base
         @logger.info("refreshing dictionary file")
       end
     end
-
+    logger.error("son")
     return unless event.include?(@field) # Skip translation in case event does not have @event field.
 
     begin

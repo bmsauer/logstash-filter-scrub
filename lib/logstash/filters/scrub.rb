@@ -50,7 +50,7 @@ class LogStash::Filters::Scrub < LogStash::Filters::Base
   end # def register
 
   
-  def filter
+  def filter(event)
     if @dictionary_path
       if @next_refresh < Time.now
         load_dictionary

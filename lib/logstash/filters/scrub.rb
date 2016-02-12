@@ -58,17 +58,20 @@ class LogStash::Filters::Scrub < LogStash::Filters::Base
         @logger.info("refreshing dictionary file")
       end
     end
-    logger.error("son")
+
     return unless event.include?(@field) # Skip translation in case event does not have @event field.
 
     begin
       #If source field is array use first value and make sure source value is string
       source = event[@field].is_a?(Array) ? event[@field].first.to_s : event[@field].to_s
       matched = false
+
+      uuidmatch = /[A-Fa-f0-9]{8}-(?:[A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}/
+      @logger.debug(source =~ uuidmatch)
       
       translation = source.gsub(Regexp.union(@dictionary.keys), @dictionary)
-      @logger.error(@dictionary.to_s)
-      @logger.error(source)
+      @logger.debug(@dictionary.to_s)
+      @logger.debug(source + " " + translation)
       if source != translation
         event[@field] = translation.force_encoding(Encoding::UTF_8)
         matched = true
